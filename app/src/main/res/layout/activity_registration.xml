@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".Registration">
 
     <ImageView
         android:id="@+id/logo"
@@ -17,16 +16,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selamat Datang"
+        android:text="Daftar Akun"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="20dp" />
 
     <EditText
+        android:id="@+id/txtFullName"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Nama Lengkap" />
+
+    <EditText
         android:id="@+id/txtUsername"
         android:layout_width="316dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:hint="Email"
         android:inputType="textEmailAddress" />
 
@@ -39,10 +52,10 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Daftar"
         android:textColor="@android:color/white"
         android:background="@drawable/rounded_button"
         android:layout_marginTop="40dp" />
@@ -53,58 +66,28 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/pbLoadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apakah kamu memiliki akun? "
+            android:text="Sudah memiliki akun? "
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:onClick="registerClicked"
-            android:text="Daftar sekarang"
+            android:onClick="loginClicked"
+            android:text="Login sekarang"
             android:textColor="@color/dark_blue"
             android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <ProgressBar
-        android:visibility="gone"
-        android:id="@+id/pbLoadingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="or"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Google Logo"
-            android:src="@drawable/google_logo" />
-
-        <Button
-            android:id="@+id/btnSignInGoogle"
-            android:layout_width="253dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/rounded_button"
-            android:text="Sign in with Google"
-            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
