@@ -72,11 +72,14 @@ public class MainActivity extends AppCompatActivity {
                                     if (status) {
                                         // Contoh menyimpan email ke SharedPreferences
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(EMAIL_KEY, username);
-                                        editor.putString(PASSWORD_KEY, password);
+                                        editor.putString(EMAIL_KEY, username.toString());
+                                        editor.putString(PASSWORD_KEY,"");
                                         editor.apply();
 
                                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                                        // Pindah ke halaman ListActivity
+                                        Intent intent = new Intent(MainActivity.this, ListCoktail.class);
+                                        startActivity(intent);
                                     } else {
                                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                                     }

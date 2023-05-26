@@ -91,17 +91,12 @@
         android:layout_marginTop="20dp"
         android:gravity="center">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Google Logo"
-            android:src="@drawable/google_logo" />
-
         <Button
             android:id="@+id/btnSignInGoogle"
             android:layout_width="253dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:src="@drawable/google_logo"
             android:background="@drawable/rounded_button"
             android:text="Sign in with Google"
             android:textColor="@android:color/white" />
