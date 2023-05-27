@@ -1,7 +1,11 @@
 package com.example.pasgenap;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,13 +22,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListCoktail extends AppCompatActivity implements ContactAdapter.ContactAdapterListener {
+public class ListCoktail extends AppCompatActivity implements ContactsAdapter.ContactsAdapterListener {
     RecyclerView rvdrink;
-    ArrayList<CoktailModel> listDrink;
-    private ContactAdapter adapterListKontak;
+    ArrayList<CoktailModel> listDataDrink;
+    private ContactsAdapter adapterListMinuman;
+    ProgressBar pbloadingteam;
 
     public void getEPLOnline() {
-        String url = "www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
+        String url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
         AndroidNetworking.get(url)
                 .setTag("test")
                 .setPriority(Priority.LOW)
@@ -34,26 +39,28 @@ public class ListCoktail extends AppCompatActivity implements ContactAdapter.Con
                     public void onResponse(JSONObject jsonObject) {
                         Log.d("Success", "onResponse: " + jsonObject.toString());
                         try {
-                            JSONArray jsonArrayEPLTeam = jsonObject.getJSONArray("teams");
+                            listDataDrink = new ArrayList<>(); // Inisialisasi objek listDataDrink
+                            JSONArray jsonArrayEPLTeam = jsonObject.getJSONArray("drinks"); // Ubah "drink" menjadi "drinks"
                             for (int i = 0; i < jsonArrayEPLTeam.length(); i++) {
                                 CoktailModel myDrink = new CoktailModel();
                                 JSONObject jsonTeam = jsonArrayEPLTeam.getJSONObject(i);
                                 myDrink.setDrinkName(jsonTeam.getString("strDrink"));
                                 myDrink.setCategory(jsonTeam.getString("strCategory"));
-                                myDrink.setGlass(jsonTeam.getString("strGlass"));
-                                myDrink.setAlcoholic(jsonTeam.getString("strAlcoholic"));
                                 myDrink.setStrDrinkThumb(jsonTeam.getString("strDrinkThumb"));
-                                myDrink.setIngredient1(jsonTeam.getString("strIngredient1"));
-                                myDrink.setInstruction(jsonTeam.getString("strInstruction"));
-                                myDrink.setMeasure1(jsonTeam.getString("strMeasure1"));
-                                listDrink.add(myDrink);
+                                listDataDrink.add(myDrink);
                             }
-                            rvdrink = findViewById(R.id.rvdrink);
-                            adapterListKontak = new ContactAdapter(getApplicationContext(), listDrink, ListCoktail.this);
+                            rvdrink = findViewById(R.id.rvkontakname);
+                            adapterListMinuman = new ContactsAdapter(getApplicationContext(), listDataDrink, ListCoktail.this);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                             rvdrink.setHasFixedSize(true);
                             rvdrink.setLayoutManager(mLayoutManager);
-                            rvdrink.setAdapter(adapterListKontak);
+                            rvdrink.setAdapter(adapterListMinuman);
+                            // untuk loading bar
+                            pbloadingteam = findViewById(R.id.pbloading);
+                            pbloadingteam.setVisibility(View.GONE);
+                            rvdrink.setVisibility(View.VISIBLE);
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -70,12 +77,16 @@ public class ListCoktail extends AppCompatActivity implements ContactAdapter.Con
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_coktail_layout);
-        listDrink = new ArrayList<>();
+        listDataDrink = new ArrayList<>();
         getEPLOnline();
     }
 
     @Override
-    public void onContactSelected(CoktailModel contact) {
-        // Implement your code when a contact is selected
+    public void onContactSelected(CoktailModel drink) {
+        // Pindah ke halaman DetailPage dengan mengirimkan data minuman
+        Intent intent = new Intent(ListCoktail.this, DetailCoktailPage.class);
+        intent.putExtra("drink", (Parcelable) drink);
+        startActivity(intent);
     }
 }
+

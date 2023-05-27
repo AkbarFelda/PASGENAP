@@ -1,6 +1,6 @@
 package com.example.pasgenap;
 
-public class CoktailModel {
+public class CoktailModel  {
     private String drinkName;
     private String Category;
     private String strDrinkThumb;
