@@ -15,6 +15,20 @@
         android:theme="@style/Theme.PASGENAP"
         tools:targetApi="31">
         <activity
+            android:name=".DetailCoktailPage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ListCoktail"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Registration"
             android:exported="false">
             <meta-data
