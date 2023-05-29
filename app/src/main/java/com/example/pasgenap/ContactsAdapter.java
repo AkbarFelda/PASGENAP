@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
     private Context context;
     private List<CoktailModel> listDataDrink;
     private ContactsAdapterListener listener;
+    private AdapterView.OnItemLongClickListener longClickListener;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvname, tvkategori;
@@ -44,6 +47,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
         this.listener = listener;
     }
 
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
+    }
+
     @NonNull
     @Override
     public ContactsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,12 +68,16 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return listDataDrink.size();
     }
 
     public interface ContactsAdapterListener {
+        void onItemLongClick(int position);
+
         void onContactSelected(CoktailModel contact);
     }
     }
