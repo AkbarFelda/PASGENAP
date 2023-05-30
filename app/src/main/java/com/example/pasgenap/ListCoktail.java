@@ -97,27 +97,6 @@ public class ListCoktail extends AppCompatActivity implements ContactsAdapter.Co
         getDrinksOnline();
     }
 
-
-    @Override
-    public void onItemLongClick(int position) {
-        // Tampilkan dialog konfirmasi penghapusan
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Konfirmasi")
-                .setMessage("Apakah kamu yakin ingin menghapusnya?")
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Hapus item dari RecyclerView
-                        listDataDrink.remove(position);
-                        adapterListMinuman.notifyItemRemoved(position);
-                    }
-                })
-                .setNegativeButton("Tidak", null)
-                .show();
-    }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
@@ -129,7 +108,7 @@ public class ListCoktail extends AppCompatActivity implements ContactsAdapter.Co
         int id = item.getItemId();
 
         if (id == R.id.action_logout) {
-            logoutUser(); // Panggil method untuk proses logout
+            logoutUser(); // Call the method to perform logout
             return true;
         }
 
@@ -137,9 +116,6 @@ public class ListCoktail extends AppCompatActivity implements ContactsAdapter.Co
     }
 
     private void logoutUser() {
-        // Tambahkan kode untuk proses logout di sini
-        // Misalnya, menghapus data sesi pengguna, menghapus token akses, atau mengarahkan pengguna kembali ke halaman login
-        // Contoh:
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(EMAIL_KEY);
         editor.remove(PASSWORD_KEY);
@@ -150,12 +126,66 @@ public class ListCoktail extends AppCompatActivity implements ContactsAdapter.Co
         finish();
     }
 
+    @Override
+    public void onItemLongClick(int position) {
 
+    }
 
     @Override
     public void onContactSelected(CoktailModel drink) {
         Intent intent = new Intent(ListCoktail.this, DetailCoktailPage.class);
         intent.putExtra("drink", drink);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClickListener(CoktailModel coktailModel) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Item");
+        builder.setMessage("Kamu yakin ingin menghapusnya ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Remove item from RecyclerView
+                int position = listDataDrink.indexOf(coktailModel);
+                listDataDrink.remove(position);
+                adapterListMinuman.notifyItemRemoved(position);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+
+    public void onItemLongClick(CoktailModel model) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Item");
+        builder.setMessage("Kamu yakin ingin menghapusnya ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Remove item from RecyclerView
+                int position = listDataDrink.indexOf(model);
+                listDataDrink.remove(position);
+                adapterListMinuman.notifyItemRemoved(position);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

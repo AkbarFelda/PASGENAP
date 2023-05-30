@@ -38,6 +38,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
                     listener.onContactSelected(listDataDrink.get(getAdapterPosition()));
                 }
             });
+
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onDeleteClickListener(listDataDrink.get(getAdapterPosition()));
+                    return true;
+                }
+            });
+
         }
     }
 
@@ -47,9 +56,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
         this.listener = listener;
     }
 
-    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener longClickListener) {
-        this.longClickListener = longClickListener;
-    }
 
     @NonNull
     @Override
@@ -68,8 +74,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
     }
 
-
-
     @Override
     public int getItemCount() {
         return listDataDrink.size();
@@ -79,6 +83,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
         void onItemLongClick(int position);
 
         void onContactSelected(CoktailModel contact);
+
+        void onDeleteClickListener(CoktailModel coktailModel);
     }
     }
 
